@@ -1,0 +1,84 @@
+# Configuration file for Time Series Analysis with Attention Mechanisms
+
+# Data configuration
+data:
+  synthetic:
+    n_samples: 1000
+    noise_level: 0.1
+    trend_strength: 0.5
+    seasonality_periods: [12, 24, 168]  # daily, weekly patterns
+    anomaly_probability: 0.05
+  
+  preprocessing:
+    train_split: 0.7
+    val_split: 0.15
+    test_split: 0.15
+    sequence_length: 20
+    normalize: true
+
+# Model configuration
+models:
+  attention_rnn:
+    input_dim: 1
+    hidden_dim: 64
+    num_layers: 2
+    dropout: 0.2
+    attention_type: "dot_product"  # dot_product, additive, multi_head
+  
+  transformer:
+    d_model: 64
+    nhead: 4
+    num_layers: 3
+    dropout: 0.1
+    sequence_length: 20
+  
+  lstm:
+    hidden_dim: 64
+    num_layers: 2
+    dropout: 0.2
+    bidirectional: false
+  
+  gru:
+    hidden_dim: 64
+    num_layers: 2
+    dropout: 0.2
+    bidirectional: false
+
+# Training configuration
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  epochs: 100
+  early_stopping_patience: 10
+  weight_decay: 1e-5
+  gradient_clip_norm: 1.0
+
+# Evaluation configuration
+evaluation:
+  metrics: ["mse", "mae", "rmse", "mape", "smape"]
+  forecast_horizon: 10
+  confidence_intervals: [0.8, 0.95]
+
+# Visualization configuration
+visualization:
+  figure_size: [12, 8]
+  style: "seaborn-v0_8"
+  color_palette: "husl"
+  save_plots: true
+  plot_format: "png"
+  dpi: 300
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/timeseries_analysis.log"
+  max_file_size: "10MB"
+  backup_count: 5
+
+# Paths
+paths:
+  data_dir: "data"
+  models_dir: "models"
+  logs_dir: "logs"
+  plots_dir: "plots"
